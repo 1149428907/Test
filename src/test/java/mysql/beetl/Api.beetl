@@ -1,0 +1,12 @@
+package com.jingsha.api.${param.prefix!};
+import com.jingsha.api.BaseService;
+/**
+ * <P>File name : ${param.className!}Service.java </P>
+ * <P>Author : ${param.createUser!} </P> 
+ * <P>Date : ${date()}</P>
+ * <P>Desc : ${param.tableDesc!}</P>
+ * 注：BaseService中应包含基本的增删改查等操作
+ */
+public interface ${param.className!}Service extends BaseService{
+   
+}

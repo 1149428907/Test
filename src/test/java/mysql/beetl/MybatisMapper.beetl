@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jingsha.dao.${param.prefix!}.${param.className!}Mapper">
+
+   	<%
+ var cloumnNames=param.cloumnNames;  
+ 	
+ var tableColumnTypes=param.tableColumnTypes;
+ var tableColumnNames=param.tableColumnNames;
+ var tableColumnNotes=param.tableColumnNotes;
+ var tableColumnIsNulls=param.tableColumnIsNulls;
+ var tableCloumnDefaultValues=param.tableCloumnDefaultValues;
+ 
+ var size=tableColumnTypes.~size;
+ var size_1=size-1;	
+ var tableName=param.tableName;
+ var dou=',';
+	%>
+
+    <!-- resultMap -->
+    <resultMap type="com.jingsha.bean.${param.prefix!}.${param.className!}" id="${param.className!}ResultMap">
+    <%for (var i=0;i<tableColumnTypes.~size;i++){ %> 
+    <result column="${tableColumnNames[i]}" property="${cloumnNames[i]}" />
+    <%}%>
+    </resultMap>
+    
+    
+         <!--
+         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+		 Date date = df.parse( " 2008-07-10 19:20:00 " );
+		 Calendar MyDate = Calendar.getInstance();
+		 MyDate.setTime(date);
+		 String adddate = df.format(MyDate.getTime()).substring(0);//这里的adddate已经转换为固定的格式。 
+		 pd.put("crtTime", adddate);
+		 
+		 mapper 使用方法
+		 insert into xx(crtTime)values(#{crtTime})
+		 
+		 直接保存当前时间  
+		 insert into xx(crtTime)values(now())
+    -->
+    
+
+    <!-- 新增-->
+    <insert id="save" parameterType="pd">
+        insert into ${tableName}(
+        <%for (var i=0;i<size;i++){ %> 
+         ${tableColumnNames[i]} <% if(i!=size_1){ print(dou); }%>
+        <%}%>
+        ) values (
+        <%for (var i=0;i<size;i++){ %> 
+           #{${cloumnNames[i]}}   <% if(i!=size_1){ print(dou) ;}%>
+        <%}%>
+        )
+    </insert>
+    
+        <!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from ${tableName}
+		where 
+			ID = #{id}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  ${tableName}
+		<set> 
+	 <%for (var i=0;i<size;i++){ %> 
+	   <if test="${cloumnNames[i]} != null " >
+           ${tableColumnNames[i]}=#{${cloumnNames[i]}} ,
+       </if>
+      <%}%>	
+		</set>
+		where 
+		  ID = #{id}
+	</update>
+	
+		
+	<!-- 列表 -->
+	<select id="listPage" parameterType="pd" resultMap="${param.className!}ResultMap">
+		select
+		<%for (var i=0;i<size;i++){ %> 
+         t.${tableColumnNames[i]} <% if(i!=size_1){ print(dou); }%>
+        <%}%>
+		from ${tableName} t
+	</select>	
+	
+		<!-- 列表全部 -->
+	<select id="listAll" parameterType="pd" resultMap="${param.className!}ResultMap">
+		select
+		<%for (var i=0;i<size;i++){ %> 
+         t.${tableColumnNames[i]} <% if(i!=size_1){ print(dou); }%>
+        <%}%>
+		from ${tableName} t
+	</select>
+	
+			<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultMap="${param.className!}ResultMap">
+		select
+		<%for (var i=0;i<size;i++){ %> 
+         t.${tableColumnNames[i]} <% if(i!=size_1){ print(dou); }%>
+        <%}%>
+		from ${tableName} t
+		where t.ID =#{id}
+	</select>
+    
+</mapper>

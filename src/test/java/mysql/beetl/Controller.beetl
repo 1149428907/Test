@@ -1,0 +1,21 @@
+package com.jingsha.controller.${param.prefix!};
+
+import org.springframework.stereotype.Controller;
+
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.jingsha.common.controller.BaseController;
+import com.jingsha.api.${param.prefix!}.${param.className!}Service;
+
+/**
+ * <P>File name : ${param.className!}Controller.java </P>
+ * <P>Author : ${param.createUser!} </P> 
+ * <P>Date : ${date()}</P>
+ * <P>Desc : ${param.tableDesc!}</P>
+ */
+@Controller
+public class ${param.className!}Controller extends BaseController {
+
+    
+    @Reference(registry={"xxxx"})//接口注入这样写，其中 registry 的参数有：doc-soa、learn-soa、user-soa、mc 四个，表明这个接口是哪个soa提供的//举例
+    private ${param.className!}Service service;
+}

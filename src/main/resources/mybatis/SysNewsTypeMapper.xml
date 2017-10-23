@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jingsha.dao.sys.SysNewsTypeMapper">
+
+
+    <!-- resultMap -->
+    <resultMap type="com.jingsha.bean.sys.SysNewsType" id="SysNewsTypeResultMap">
+    <result column="id" property="id" />
+    <result column="create_date" property="createDate" />
+    <result column="update_date" property="updateDate" />
+    <result column="state" property="state" />
+    <result column="type_scenarios" property="typeScenarios" />
+    <result column="type_name" property="typeName" />
+    <result column="type_desc" property="typeDesc" />
+    <result column="type_no" property="typeNo" />
+    </resultMap>
+    
+    
+         <!--
+         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+		 Date date = df.parse( " 2008-07-10 19:20:00 " );
+		 Calendar MyDate = Calendar.getInstance();
+		 MyDate.setTime(date);
+		 String adddate = df.format(MyDate.getTime()).substring(0);//这里的adddate已经转换为固定的格式。 
+		 pd.put("crtTime", adddate);
+		 
+		 mapper 使用方法
+		 insert into xx(crtTime)values(#{crtTime})
+		 
+		 直接保存当前时间  
+		 insert into xx(crtTime)values(now())
+    -->
+    
+
+    <!-- 新增-->
+    <insert id="save" parameterType="pd">
+        insert into mht_sys_news_type(
+         id ,
+         create_date ,
+         update_date ,
+         state ,
+         type_scenarios ,
+         type_name ,
+         type_desc ,
+         type_no
+        ) values (
+           #{id}   ,
+           #{createDate}   ,
+           #{updateDate}   ,
+           #{state}   ,
+           #{typeScenarios}   ,
+           #{typeName}   ,
+           #{typeDesc}   ,
+           #{typeNo}   
+        )
+    </insert>
+    
+        <!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from mht_sys_news_type
+		where 
+			ID = #{id}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update  mht_sys_news_type
+		<set> 
+	   <if test="id != null " >
+           id=#{id} ,
+       </if>
+	   <if test="createDate != null " >
+           create_date=#{createDate} ,
+       </if>
+	   <if test="updateDate != null " >
+           update_date=#{updateDate} ,
+       </if>
+	   <if test="state != null " >
+           state=#{state} ,
+       </if>
+	   <if test="typeScenarios != null " >
+           type_scenarios=#{typeScenarios} ,
+       </if>
+	   <if test="typeName != null " >
+           type_name=#{typeName} ,
+       </if>
+	   <if test="typeDesc != null " >
+           type_desc=#{typeDesc} ,
+       </if>
+        <if test="typeNo != null " >
+           type_no=#{typeNo} ,
+       </if>
+		</set>
+		where 
+		  ID = #{id}
+	</update>
+	
+		
+	<!-- 列表 -->
+	<select id="listPage" parameterType="pd" resultMap="SysNewsTypeResultMap">
+		select
+         t.id ,
+         t.create_date ,
+         t.update_date ,
+         t.state ,
+         t.type_scenarios ,
+         t.type_name ,
+         t.type_desc ,
+         t.type_no 
+		from mht_sys_news_type t 
+		where t.state = '0' 
+		<if test="key != null and key != ''">
+			and t.type_name like  CONCAT('%', #{key}, '%')
+		</if>
+		<if test="typeScenarios != null and typeScenarios != ''">
+			and t.type_scenarios = #{typeScenarios}
+		</if>
+		<if test="startTime != null and startTime != ''">
+		and t.create_date >= DATE_FORMAT( #{startTime}, '%Y-%m-%d %H:%i:%s')
+		</if>
+		<if test="endTime != null and endTime != ''">
+		<![CDATA[and t.create_date <= DATE_FORMAT( #{endTime}, '%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		order by t.create_date desc 
+	</select>	
+	
+		<!-- 列表全部 -->
+	<select id="listAll" parameterType="pd" resultMap="SysNewsTypeResultMap">
+		select
+         t.id ,
+         t.create_date ,
+         t.update_date ,
+         t.state ,
+         t.type_scenarios ,
+         t.type_name ,
+         t.type_desc ,
+         t.type_no 
+		from mht_sys_news_type t 
+		where 
+		<if test="selectFlag == 1">
+			not exists (select 1 from mht_sys_news_template te where te.type_id = t.id and te.state='0' ) 
+			and 
+		</if>
+		t.state = '0' 
+		<if test="typeScenarios != null and typeScenarios != ''">
+			and t.type_scenarios = #{typeScenarios}
+		</if>
+		<if test="typeName != null and typeName != ''">
+			and t.type_name = #{typeName}
+		</if>
+		order by t.create_date desc 
+	</select>
+	
+	<!-- 列表全部 -->
+	<select id="listOrderByCode" parameterType="pd" resultType="pd">
+		select
+         t.id ,
+         t.create_date ,
+         t.update_date ,
+         t.state ,
+         t.type_scenarios ,
+         t.type_name ,
+         t.type_desc ,
+         t.type_no 
+		from mht_sys_news_type t 
+		where t.state = '0' 
+		order by t.type_no desc 
+	</select>
+	
+			<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultMap="SysNewsTypeResultMap">
+		select
+         t.id ,
+         t.create_date ,
+         t.update_date ,
+         t.state ,
+         t.type_scenarios ,
+         t.type_name ,
+         t.type_desc ,
+         t.type_no 
+		from mht_sys_news_type t
+		where t.ID =#{id}
+	</select>
+    
+</mapper>

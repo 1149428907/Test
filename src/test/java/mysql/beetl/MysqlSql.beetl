@@ -1,0 +1,24 @@
+#创建表
+   	<%
+ 	
+ var tableColumnTypes=param.tableColumnTypes;
+ var tableColumnNames=param.tableColumnNames;
+ var tableColumnNotes=param.tableColumnNotes;
+ var tableColumnIsNulls=param.tableColumnIsNulls;
+ var tableCloumnDefaultValues=param.tableCloumnDefaultValues;
+ var primaryKeys=param.primaryKeys;
+ 
+ var size=tableColumnTypes.~size;
+ var size_1=size-1;	
+ var tableName=param.tableName;
+ var dou=',';
+	%>
+
+
+CREATE TABLE ${tableName} (
+<%for (var i=0;i<size;i++){ %> 
+    ${tableColumnNames[i]} ${tableColumnTypes[i]}   <% if(tableColumnIsNulls[i]=='0'){ print("not null"); }%>    COMMENT '${tableColumnNotes[i]}'       ,
+  
+<%}%>
+  PRIMARY KEY (id)
+)engine=innodb default charset=utf8 auto_increment=1 COMMENT='${param.tableDesc!}';

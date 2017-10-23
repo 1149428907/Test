@@ -1,0 +1,19 @@
+ package com.jingsha.dao.${param.prefix!};
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.jingsha.bean.${param.prefix!}.${param.className!};
+import com.jingsha.common.mapperDao.BaseMapper;
+
+/**
+ * <P>File name : I${param.className!}Service.java </P>
+ * <P>Author : ${param.createUser!} </P> 
+ * <P>Date : ${date()}</P>
+ * <P>Desc : ${param.tableDesc!}</P>
+ */
+@Mapper 
+public interface ${param.className!}Mapper extends BaseMapper<${param.className!}>{
+	
+}
+
+

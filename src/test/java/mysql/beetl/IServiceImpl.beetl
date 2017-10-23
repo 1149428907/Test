@@ -1,0 +1,67 @@
+package com.jingsha.service.impl.${param.prefix!};
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.jingsha.bean.${param.prefix!}.${param.className!};
+import com.jingsha.dao.${param.prefix!}.${param.className!}Mapper;
+import com.jingsha.page.PageData;
+import com.jingsha.service.${param.prefix!}.I${param.className!}Service;
+
+
+@Component
+public class I${param.className!}ServiceImpl  implements I${param.className!}Service{
+
+    @Autowired
+	private ${param.className!}Mapper mapper;
+		/*
+	 * 增加
+	 */
+	@Override
+	public int save(PageData pd) throws Exception {
+		return mapper.save(pd);
+	}
+
+	/*
+	 * 删除
+	 */
+	@Override
+	public int delete(PageData pd) throws Exception {
+		return mapper.delete(pd);
+	}
+
+	/*
+	 * 编辑
+	 */
+	@Override
+	public int edit(PageData pd) throws Exception {
+		return mapper.edit(pd);
+	}
+
+	/*
+	 * 分页
+	 */
+	@Override
+	public List<${param.className!}> listPage(PageData pd) throws Exception {
+		return mapper.listPage(pd);
+	}
+
+	/*
+	 * 查询所有
+	 */
+	@Override
+	public List<${param.className!}> listAll(PageData pd) throws Exception {
+		return mapper.listAll(pd);
+	}
+
+	/*
+	 * 查询详情
+	 */
+	@Override
+	public ${param.className!} findById(PageData pd) throws Exception {
+		return mapper.findById(pd);
+	}
+}
+

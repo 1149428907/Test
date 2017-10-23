@@ -1,0 +1,16 @@
+ package com.jingsha.service.${param.prefix!};
+
+import com.jingsha.bean.${param.prefix!}.${param.className!};
+import com.jingsha.common.iService.IBaseService;
+
+/**
+ * <P>File name : I${param.className!}Service.java </P>
+ * <P>Author : ${param.createUser!} </P> 
+ * <P>Date : ${date()}</P>
+ * <P>Desc : ${param.tableDesc!}</P>
+ */
+public interface I${param.className!}Service extends IBaseService<${param.className!}>{
+	
+}
+
+

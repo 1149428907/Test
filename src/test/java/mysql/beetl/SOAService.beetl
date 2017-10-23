@@ -1,0 +1,48 @@
+package com.jingsha.soa.${param.prefix!};
+
+import org.springframework.beans.factory.annotation.Autowired;
+import com.alibaba.dubbo.config.annotation.Service;
+import com.jingsha.bean.${param.prefix!}.${param.className!};
+
+import com.jingsha.service.${param.prefix!}.I${param.className!}Service;
+import com.jingsha.api.${param.prefix!}.${param.className!}Service;
+import com.jingsha.common.soa.BaseSOAService;
+
+@Service
+public class ${param.className!}SOAService extends BaseSOAService<${param.className!}> implements ${param.className!}Service{
+		
+	@Autowired
+	I${param.className!}Service service;
+	
+	@Override
+	public String save(String jString) {
+		return super.save(jString, service);
+	}
+	
+	@Override
+	public String delete(String jString) {
+		return super.delete(jString, service);
+	}
+
+	@Override
+	public String edit(String jString) {
+		return super.edit(jString, service);
+	}
+
+	@Override
+	public String listPage(String jString) {
+		return super.listPage(jString, service);
+	}
+	
+	@Override
+	public String listAll(String jString) {
+		return super.listAll(jString, service);
+	}
+	
+	@Override
+	public String findById(String jString) {
+		return super.findById(jString, service);
+	}
+	
+
+}
